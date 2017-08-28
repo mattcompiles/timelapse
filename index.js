@@ -1,4 +1,5 @@
 const fs = require('fs');
+const path = require('path');
 const NodeWebcam = require('node-webcam');
 const videoshow = require('videoshow');
 const commandLineArgs = require('command-line-args');
@@ -34,7 +35,6 @@ const capture = (num = 1) => {
   setTimeout(() => {
     console.log('Capturing timelapse photo', num);
     Webcam.capture(`${captureFolder}/${num}`, function(err, data) {});
-    console.log('Captured timelapse photo', num);
 
     capture(num + 1);
   }, interval * 1000);
@@ -57,8 +57,11 @@ const videoOptions = {
 
 process.on('SIGINT', function() {
   console.log('Rendering video');
+  const capturedImages = fs
+    .readdirSync(captureFolder)
+    .map(file => path.join(__dirname, captureFolder, file));
 
-  videoshow(fs.readdirSync(captureFolder), videoOptions)
+  videoshow(capturedImages, videoOptions)
     .save(`${VIDEO_FOLDER}/${name}.mp4`)
     .on('error', (err, stdout, stderr) => {
       console.error('Error:', err);
