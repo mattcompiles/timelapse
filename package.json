@@ -2,14 +2,15 @@
   "name": "timelapse",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "lib/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node lib"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "command-line-args": "^4.0.7",
+    "command-line-commands": "^2.0.1",
     "node-webcam": "^0.4.3",
     "videoshow": "^0.1.11"
   }
